@@ -17,7 +17,6 @@ Adicionar o usuario vagrant no grupo wheel para dar permissao de sudo para o usu
 ```
 [root@centos8 vagrant]# usermod -aG wheel vagrant
 [root@centos8 vagrant]# gpasswd -a vagrant wheel
-Output:
 Adding user to the group wheel
 ```
 
