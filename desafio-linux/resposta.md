@@ -1,10 +1,10 @@
 1) Kernel e Boot loader 
 
-Primeiro reinicei a maquina, quando chegou no GRUB apertei ESC para interromper o processo de boot. 
-Prescionei “e” para entrar no mono de edicao 
-No menu de edicao, localizei o parametro do kernel “ro” e alterei para “rw” e adicionei o parametro “init=/sysroot/bin/sh”
-Pressionei Ctrl + X para entrar no modo single-user, em seguida executei o comando “chroot /sysroot” para coverter root file system em modo de leitura e escrita. 
-Apos isso foi possivel trocar a senha do root.
+Primeiro reiniciei a máquna, quando chegou no GRUB apertei ```ESC``` para interromper o processo de boot.<br> 
+Pressionei ```e``` para entrar no modo de edição.<br>
+No menu de edição, localizei o parâmetro do kernel ```ro``` e alterei para ```rw``` e adicionei o parametro ```init=/sysroot/bin/sh```<br> 
+Pressionei ```Ctrl + X``` para entrar no modo single-user, em seguida executei o comando ```chroot /sysroot``` para coverter root file system em modo de leitura e escrita.<br>  
+Após isso foi possível trocar a senha do root.<br> 
 Executei os comandos abaixo:
 ```
 :/# passwd root
@@ -13,7 +13,7 @@ Executei os comandos abaixo:
 :/# reboot
 ```
 
-Adicionar o usuario vagrant no grupo wheel para dar permissao de sudo para o usuario 
+Adicionei o usuario vagrant no grupo wheel para dar permissao de sudo para o usuario 
 ```
 [root@centos8 vagrant]# usermod -aG wheel vagrant
 [root@centos8 vagrant]# gpasswd -a vagrant wheel
@@ -34,30 +34,19 @@ Criação do usuário
 
 ```
 [root@centos8 vagrant]# gpasswd -a getup bin
-Output:
 Adding user getup to group bin
-```
-
-```[root@centos8 vagrant]# gpasswd -a getup wheel```
-
-Output:
-Adding user getup to group wheel
-
-```
 [root@centos8 vagrant]# visudo
 getup ALL=(ALL) NOPASSWD: ALL 
 ```
-
-(Foi adicionado esse linha para dar permissão sudo para todos os comandos, sem solicitação de senha ) 
 
 3) SSH
 
 3.1 Autenticação confiável
 
-Para alterar a autenticação por senha, precisa ir no arquivo de configuração do servidor ssh e por no na parte de permitir senha.
+Para alterar a autenticação por senha, precisa ir no arquivo de configuração do servidor ssh e por ```no``` na parte de permitir senha.
 ```
 [root@centos8 /]# vim /etc/ssh/sshd_config
-		      PasswordAuthentication no
+PasswordAuthentication no 
 ```
 
 Reiniciar o serviço ssh
@@ -67,7 +56,6 @@ Reiniciar o serviço ssh
 Chave gerada para o usuário vagrant
 ```
 angela@angela:~$ ssh-keygen -t rsa
-Output:
 Generating public/private rsa key pair.
 Enter file in which to save the key (/home/angela/.ssh/id_rsa): 
 Enter passphrase (empty for no passphrase): 
@@ -332,7 +320,7 @@ set_var EASYRSA_REQ_EMAIL      "admin@example.com"
 set_var EASYRSA_REQ_OU         "Community"
 ```
 
-Criação do par de chaves raiz público-privada para a autoridade de certificação, o comando ```nopass``` foi utilizado para nao ser solicitado a colocar uma senha sempre que interagir com a CA
+Criação do par de chaves raiz público-privada para a autoridade de certificação, o comando ```nopass``` foi utilizado para nao ser solicitado a colocar uma senha sempre que interagir com a ```CA```
 ```
 [vagrant@centos8 easy-rsa]$ ./easyrsa build-ca nopass
 Using SSL: openssl OpenSSL 1.1.1k  FIPS 25 Mar 2021
@@ -356,7 +344,7 @@ Your new CA certificate file for publishing is at:
 
 5.2 Uso de certificados
 
-A pasta cert foi criada no diretório home do vagrant para juntar os arquivos ca.crt e ca.key
+A pasta cert foi criada no diretório home do vagrant para juntar os arquivos ```ca.crt``` e ```ca.key```
 ```
 [vagrant@centos8 ~]$ mkdir cert
 [vagrant@centos8 ~]$ cp easy-rsa/pki/ca.crt cert/desafio.local.crt
@@ -396,7 +384,7 @@ Sep 06 16:59:04 centos8.localdomain nginx[6616]: nginx: configuration file /etc/
 Sep 06 16:59:04 centos8.localdomain systemd[1]: Started The nginx HTTP and reverse proxy server.
 ```
 
-Executei o curl com a opcao -k para nao checar o certificado.
+Executei o curl com a opcao -k para não checar o certificado.
 ```
 [vagrant@centos8 cert]$ curl -k https://www.desafio.local
 Duas palavrinhas pra você: para, béns!
@@ -577,8 +565,8 @@ Volume group "vgdesafio1" successfully created
   VG Name               		vgdesafio1
   System ID             
   Format                    		lvm2
-  Metadata Areas        	1
-  Metadata Sequence No  	1
+  Metadata Areas        	        1
+  Metadata Sequence No  	        1
   VG Access             		read/write
   VG Status             		resizable
   MAX LV                		0
@@ -606,15 +594,15 @@ Logical volume "lvdesafio1" created.
   LV Name                		lvdesafio1
   VG Name                		vgdesafio1
   LV UUID               		5yqok8-zkRj-upmB-Wo7u-zmd6-ynH3-KGAIY1
-  LV Write Access        	read/write
-  LV Creation host, time 	centos8.localdomain, 2022-09-06 22:24:37 +0000
+  LV Write Access        	        read/write
+  LV Creation host, time 	        centos8.localdomain, 2022-09-06 22:24:37 +0000
   LV Status              		available
   # open                 		0
   LV Size               	 	<5.00 GiB
   Current LE             		1279
   Segments               		1
   Allocation             		inherit
-  Read ahead sectors     	auto
+  Read ahead sectors     	        auto
   - currently set to     		256
   Block device           		253:2
 ```
@@ -660,26 +648,26 @@ Device     Boot Start      End  Sectors Size Id Type
 
 [vagrant@centos8 ~]$ sudo mkfs.xfs /dev/sdc1
 Output:
-meta-data=/dev/sdc1                isize=512    	agcount=4, agsize=655296 blks
-        		=                        sectsz=512   attr=2, projid32bit=1
-         		=                        crc=1        	finobt=1, sparse=1, rmapbt=0
-         		=                        reflink=1
-data     	=                        bsize=4096   blocks=2621184, imaxpct=25
-         		=                        sunit=0      	swidth=0 blks
-naming   	=version 2         bsize=4096   ascii-ci=0, ftype=1
-log      		=internal log	  bsize=4096   blocks=2560, version=2
-         		=                       sectsz=512   sunit=0 blks, lazy-count=1
-realtime 	=none               extsz=4096   blocks=0, rtextents=0
+meta-data=/dev/sdc1                          isize=512    	agcount=4, agsize=655296 blks
+        		=                    sectsz=512         attr=2, projid32bit=1
+         		=                    crc=1        	finobt=1, sparse=1, rmapbt=0
+         		=                    reflink=1
+data     	        =                    bsize=4096         blocks=2621184, imaxpct=25
+         		=                    sunit=0      	swidth=0 blks
+naming   	        =version 2           bsize=4096         ascii-ci=0, ftype=1
+log      		=internal log	     bsize=4096         blocks=2560, version=2
+         		=                    sectsz=512         sunit=0 blks, lazy-count=1
+realtime 	        =none                extsz=4096         blocks=0, rtextents=0
 
 [vagrant@centos8 ~]$ sudo mount /dev/sdc1 /mnt
 [vagrant@centos8 ~]$ df -h
-Filesystem                  			Size  	Used 	    Avail       Use%  	Mounted on
-devtmpfs                     		891M   0  	    891M      0%      	/dev
-tmpfs                        			909M   0  	    909M      0% 	/dev/shm
-tmpfs                        			909M   17M  	    893M      2% 	/run
-tmpfs                        			909M   0  	    909M      0% 	/sys/fs/cgroup
-/dev/mapper/cl_centos8-root  	125G  	2.7G  	    123G      3% 	/
-tmpfs                        			182M   0  	    182M      0% 	/run/user/1000
-tmpfs                        			182M   0  	    182M      0% 	/run/user/0
-/dev/sdc1                     		10G     104M  	    9.9G       2% 	/mnt
+Filesystem                  			Size  	Used 	    Avail     Use%  	Mounted on
+devtmpfs                     		        891M    0  	    891M      0%      	/dev
+tmpfs                        			909M    0  	    909M      0% 	/dev/shm
+tmpfs                        			909M    17M  	    893M      2% 	/run
+tmpfs                        			909M    0  	    909M      0% 	/sys/fs/cgroup
+/dev/mapper/cl_centos8-root  	                125G  	2.7G  	    123G      3% 	/
+tmpfs                        			182M    0  	    182M      0% 	/run/user/1000
+tmpfs                        			182M    0  	    182M      0% 	/run/user/0
+/dev/sdc1                     		        10G     104M  	    9.9G      2% 	/mnt
 ```
