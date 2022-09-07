@@ -269,7 +269,7 @@ Ping para checar estava respondendo
 ```
 
 Utilizei o Easy-RSA para criar a autoridade certificadora.
-Primeiramente tentei instalar os pacotes epel-release e easy-rsa e sempre retornava o erro: Warning: failed loading '/etc/yum.repos.d/CentOS-Linux-Extras.repo', skipping.
+Primeiramente tentei instalar os pacotes epel-release e easy-rsa e sempre retornava o erro: ```Warning: failed loading '/etc/yum.repos.d/CentOS-Linux-Extras.repo', skipping```.
 
 Então conclui que havia um erro neste repositório e abrir esse repositório para verificar qual era o erro. 
 ```
