@@ -174,7 +174,7 @@ Sep 05 15:52:04 centos8.localdomain systemd[1]: nginx.service: Failed with resul
 Sep 05 15:52:04 centos8.localdomain systemd[1]: Failed to start The nginx HTTP and reverse proxy server.
 ```
 
-Os primeiros erros identificados foram a falta do “ ; “ na linha anterior a linha 45 e porta que estava 90 e o serviço http roda na porta 80)
+Os primeiros erros identificados foram a falta do ```;``` na linha anterior a linha 45 e porta que estava 90 e o serviço http roda na porta 80.
 
 Correção dos erros relatados acima
 ```
