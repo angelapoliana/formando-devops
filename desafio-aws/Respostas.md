@@ -32,10 +32,10 @@ O usuário Administrator foi adcionado ao grupo Administrators.
 No Security Group (stack-controle-WebServerSecurityGroup-17XYSAGXM3BNH) o port range não englobava a porta 80 que é a porta http.<br>
 ![netw11](Imagens/2_Networking/Imagem_11.png)
 
-Fiz a alteração para liberar a porta 80.<br>
+Fiz a alteração para liberar a porta 80.
 ![netw12](Imagens/2_Networking/Imagem_12.png)
 
-A página web voltou a ser exibida corretamente.<br>
+A página web voltou a ser exibida corretamente.
 ![netw13](Imagens/2_Networking/Imagem_13.png)
 
 **3 - EC2 Access**<br>
@@ -46,21 +46,26 @@ Criei uma IAM role permitindo a instância EC2 acessar o Systems Manager.<br>
 O AWS Systems Manager fornece um shell interativo baseado em navegador e CLI para gerenciar instâncias EC2 do Windows e do Linux, sem a necessidade de abrir portas de entrada, gerenciar chaves SSH ou usar hosts de bastiões
 ![ec2Ace15](Imagens/3_EC2_Access/Imagem_15.png)
 
-Anexei a role na instância.<br>
+Anexei a role na instância.
 ![ec2Ace16](Imagens/3_EC2_Access/Imagem_16.png)
 
-Criação da chave SSH para adicionar na instância.<br>
+Criação da chave SSH para adicionar na instância.
 ![ec2Ace17](Imagens/3_EC2_Access/Imagem_17.png)
 
-Conectei na instância através do Session Manager.<br> 
+Conectei na instância através do Session Manager.
 ![ec2Ace18](Imagens/3_EC2_Access/Imagem_18.png)
 
-Adicionei a chave publica no arquivo authorized_keys.<br>
+Adicionei a chave publica no arquivo authorized_keys.
 ![ec2Ace19](Imagens/3_EC2_Access/Imagem_19.png)
 
 ![ec2Ace20](Imagens/3_EC2_Access/Imagem_20.png)
 
+Realizei a conexão da instância via SSH.
+![ec2Ace21](Imagens/3_EC2_Access/Imagem_21.png)
 
+2 - Alteração do texto da página web exibida, colocando meu nome no início do texto do arquivo.
+![ec2Ace22](Imagens/3_EC2_Access/Imagem_22.png)
 
+![ec2Ace23](Imagens/3_EC2_Access/Imagem_23.png)
 
 
