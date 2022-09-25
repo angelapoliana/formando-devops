@@ -77,8 +77,7 @@ Coloquei o serviço do apache enable e chequei novamente para ter certeza se o s
 ![ec2Trou25](Imagens/4_EC2_Troubleshooting/Imagem_25.png)
 
 **5 - Balanceamento**<br>
-Snapshot da Instância.
-![Balan26](Imagens/5_Balanceamento/Imagem_26.png)
+Primeiramente fiz o Snapshot da Instância.
 ![Balan27](Imagens/5_Balanceamento/Imagem_27.png)
 
 Com o Snapshot fiz a Image e o Launch da instância. 
@@ -90,14 +89,13 @@ Primeira Instância.
 Serviço web da primeira instância funcionando.
 ![Balan30](Imagens/5_Balanceamento/Imagem_30.png)
 
-Cópia Idêntica da EC2
+Cópia idêntica da EC2
 ![Balan31](Imagens/5_Balanceamento/Imagem_31.png)
 
 Serviço web da segunda instância funcionando.
 ![Balan32](Imagens/5_Balanceamento/Imagem_32.png)
 
 Para criar o Load Balancer primeiro fiz a criação do Target Group.
-![Balan33](Imagens/5_Balanceamento/Imagem_33.png)
 ![Balan34](Imagens/5_Balanceamento/Imagem_34.png)
 
 Instâncias associadas ao Target Group. 
@@ -116,3 +114,5 @@ Pausei uma das instâncias para verificar se ainda seria possível acessar a pá
 
 Pagina web respondendo apenas a instância que não foi pausada.
 ![Balan41](Imagens/5_Balanceamento/Imagem_41.png)
+
+# **6 - Segurança**
