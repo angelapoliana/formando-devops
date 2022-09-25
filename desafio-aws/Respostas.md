@@ -8,6 +8,7 @@ Criação do Usuário Administrator.
 Foi atachada a police AdministradorAccess dando full access ao usuário para os serviços da AWS.<br>
 O usuário Administrator foi adcionado ao grupo Administrators.
 ![prep03](Imagens/Preparacao_Ambiante/Imagem_3.png)
+
 ![prep04](Imagens/Preparacao_Ambiante/Imagem_4.png)
 
 2 - AccessKey e SecretKey do seu usuário e configure o aws cli:
@@ -21,3 +22,10 @@ O usuário Administrator foi adcionado ao grupo Administrators.
 ![cria08](Imagens/Criancao_Ambiente/Imagem_8.png)
 
 ![cria09](Imagens/Criancao_Ambiente/Imagem_9.png)
+
+# Desafio AWS
+
+**1 - Setup de ambiente**<br>
+![setup10](Imagens/1_Setup Ambiente/Imagem_10.png)
+
+desafio-aws/Imagens/1_Setup Ambiente/Imagem_10.png
