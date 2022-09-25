@@ -69,5 +69,9 @@ Realizei a conexão da instância via SSH.
 ![ec2Ace23](Imagens/3_EC2_Access/Imagem_23.png)
 
 **4 - EC2 troubleshooting**<br>
+Apos reiniciar a instância verifiquei que o serviço não iniciou automaticamente.<br>
+Chequei o status do apache e confirmei que o serviço estava desabilitado.
 ![ec2Trou24](Imagens/4_EC2_Troubleshooting/Imagem_24.png)
+
+Coloquei o serviço do apache enable e chequei novamente para ter certeza se o status tinha alterado.
 ![ec2Trou25](Imagens/4_EC2_Troubleshooting/Imagem_25.png)
