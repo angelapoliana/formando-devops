@@ -68,4 +68,6 @@ Realizei a conexão da instância via SSH.
 
 ![ec2Ace23](Imagens/3_EC2_Access/Imagem_23.png)
 
-
+**4 - EC2 troubleshooting**<br>
+![ec2Trou24](Imagens/4_EC2_Troubleshooting/Imagem_24.png)
+![ec2Trou25](Imagens/4_EC2_Troubleshooting/Imagem_25.png)
