@@ -117,13 +117,19 @@ Pagina web respondendo apenas a instância que não foi pausada.
 
 # **6 - Segurança**
 
-Primeiro criei outro security group (sg-0c3f3af0d9447482b - SG-LoadBalancer com a porta 80 aberta. 
+Primeiro criei outro Security Group ```sg-0c3f3af0d9447482b - SG-LoadBalancer``` com a porta 80 (HTTP) aberta. 
 ![Sec42](Imagens/6_Seguranca/Imagem_42.png)
 
-Criei um novo Load Balancer e adicionei o security group que foi criado anteriormente. 
+Criei um novo Load Balancer e adicionei o security group ```sg-0c3f3af0d9447482b - SG-LoadBalancer```. 
 ![Sec43](Imagens/6_Seguranca/Imagem_43.png)
 
-No Security Group das instâncias removi a porta 80 que estava aberta para todos e adicionei a porta 80 para o Security Group
+No Security Group das instâncias ```sg-03ec9f95661f06ed2``` removi a porta 80 (HTTP) que estava aberta para todos e adicionei a porta 80 (HTTP) para o Security Group ```sg-0c3f3af0d9447482b - SG-LoadBalancer```.
 ![Sec44](Imagens/6_Seguranca/Imagem_44.png)
 
+A página web não estava mais respondendo quando tentava acessar diretamente pelo ip das instâncias.
+![Sec45](Imagens/6_Seguranca/Imagem_45.png)
+![Sec46](Imagens/6_Seguranca/Imagem_46.png)
 
+A página web só aceita chamadas pelo endereço de DNS do Load Balancer.
+![Sec47](Imagens/6_Seguranca/Imagem_47.png)
+![Sec48](Imagens/6_Seguranca/Imagem_48.png)
