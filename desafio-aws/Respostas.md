@@ -96,13 +96,17 @@ Cópia Idêntica da EC2
 Serviço web da segunda instância funcionando.
 ![Balan32](Imagens/5_Balanceamento/Imagem_32.png)
 
-Para criar o Load Balance primeiro fiz a criação do Target Group.
+Para criar o Load Balancer primeiro fiz a criação do Target Group.
 ![Balan33](Imagens/5_Balanceamento/Imagem_33.png)
 ![Balan34](Imagens/5_Balanceamento/Imagem_34.png)
 
 Instâncias associadas ao Target Group. 
 ![Balan35](Imagens/5_Balanceamento/Imagem_35.png)
 
-Criação do Load Balance
+Criação do Load Balancer.
 ![Balan36](Imagens/5_Balanceamento/Imagem_36.png)
 ![Balan37](Imagens/5_Balanceamento/Imagem_37.png)
+
+Serviço web respondendo ao endereço de DNS do Load Balancer.
+![Balan38](Imagens/5_Balanceamento/Imagem_38.png)
+![Balan39](Imagens/5_Balanceamento/Imagem_39.png)
