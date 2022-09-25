@@ -26,6 +26,17 @@ O usuário Administrator foi adcionado ao grupo Administrators.
 # Desafio AWS
 
 **1 - Setup de ambiente**<br>
-![setup10](Imagens/1_Setup Ambiente/Imagem_10.png)
+![setup10](Imagens/1_Setup_Ambiente/Imagem_10.png)
 
-desafio-aws/Imagens/1_Setup Ambiente/Imagem_10.png
+**2 - Networking**<br>
+No Security Group (stack-controle-WebServerSecurityGroup-17XYSAGXM3BNH) o port range não englobava a porta 80 que é a porta http.<br>
+![netw11](Imagens/2_Networking/Imagem_11.png)
+
+Fiz a alteração para liberar a porta 80.<br>
+![netw12](Imagens/2_Networking/Imagem_12.png)
+
+A página web voltou a ser exibida corretamente.<br>
+![netw13](Imagens/2_Networking/Imagem_13.png)
+
+
+
