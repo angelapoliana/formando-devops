@@ -81,7 +81,7 @@ Snapshot da Instância.
 ![Balan26](Imagens/5_Balanceamento/Imagem_26.png)
 ![Balan27](Imagens/5_Balanceamento/Imagem_27.png)
 
-Com o Snapshot fiz a Image e o Launch da instância a partit da AMI. 
+Com o Snapshot fiz a Image e o Launch da instância. 
 ![Balan28](Imagens/5_Balanceamento/Imagem_28.png)
 
 Primeira Instância.
@@ -96,3 +96,13 @@ Cópia Idêntica da EC2
 Serviço web da segunda instância funcionando.
 ![Balan32](Imagens/5_Balanceamento/Imagem_32.png)
 
+Para criar o Load Balance primeiro fiz a criação do Target Group.
+![Balan33](Imagens/5_Balanceamento/Imagem_33.png)
+![Balan34](Imagens/5_Balanceamento/Imagem_34.png)
+
+Instâncias associadas ao Target Group. 
+![Balan35](Imagens/5_Balanceamento/Imagem_35.png)
+
+Criação do Load Balance
+![Balan36](Imagens/5_Balanceamento/Imagem_36.png)
+![Balan37](Imagens/5_Balanceamento/Imagem_37.png)
