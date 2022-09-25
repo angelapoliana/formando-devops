@@ -39,8 +39,28 @@ A página web voltou a ser exibida corretamente.<br>
 ![netw13](Imagens/2_Networking/Imagem_13.png)
 
 **3 - EC2 Access**<br>
-No security grupo fiz a liberacao da porta 22 para ter acesso via SSH. 
+No security grupo fiz a liberação da porta 22 para ter acesso via SSH. 
 ![ec2Ace14](Imagens/3_EC2_Access/Imagem_14.png)
+
+Criei uma IAM role permitindo a instância EC2 acessar o Systems Manager.<br>
+O AWS Systems Manager fornece um shell interativo baseado em navegador e CLI para gerenciar instâncias EC2 do Windows e do Linux, sem a necessidade de abrir portas de entrada, gerenciar chaves SSH ou usar hosts de bastiões
+![ec2Ace15](Imagens/3_EC2_Access/Imagem_15.png)
+
+Anexei a role na instância.<br>
+![ec2Ace16](Imagens/3_EC2_Access/Imagem_16.png)
+
+Criação da chave SSH para adicionar na instância.<br>
+![ec2Ace17](Imagens/3_EC2_Access/Imagem_17.png)
+
+Conectei na instância através do Session Manager.<br> 
+![ec2Ace18](Imagens/3_EC2_Access/Imagem_18.png)
+
+Adicionei a chave publica no arquivo authorized_keys.<br>
+![ec2Ace19](Imagens/3_EC2_Access/Imagem_19.png)
+
+![ec2Ace20](Imagens/3_EC2_Access/Imagem_20.png)
+
+
 
 
 
