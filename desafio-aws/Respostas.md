@@ -116,3 +116,14 @@ Pagina web respondendo apenas a instância que não foi pausada.
 ![Balan41](Imagens/5_Balanceamento/Imagem_41.png)
 
 # **6 - Segurança**
+
+Primeiro criei outro security group (sg-0c3f3af0d9447482b - SG-LoadBalancer com a porta 80 aberta. 
+![Sec42](Imagens/6_Seguranca/Imagem_42.png)
+
+Criei um novo Load Balancer e adicionei o security group que foi criado anteriormente. 
+![Sec43](Imagens/6_Seguranca/Imagem_43.png)
+
+No Security Group das instâncias removi a porta 80 que estava aberta para todos e adicionei a porta 80 para o Security Group
+![Sec44](Imagens/6_Seguranca/Imagem_44.png)
+
+
