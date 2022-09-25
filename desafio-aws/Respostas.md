@@ -29,7 +29,7 @@ O usuário Administrator foi adcionado ao grupo Administrators.
 ![setup10](Imagens/1_Setup_Ambiente/Imagem_10.png)
 
 **2 - Networking**<br>
-No Security Group (stack-controle-WebServerSecurityGroup-17XYSAGXM3BNH) o port range não englobava a porta 80 que é a porta http.<br>
+No Security Group ```stack-controle-WebServerSecurityGroup-17XYSAGXM3BNH``` o port range não englobava a porta 80 (HTTP).<br>
 ![netw11](Imagens/2_Networking/Imagem_11.png)
 
 Fiz a alteração para liberar a porta 80.
@@ -42,7 +42,7 @@ A página web voltou a ser exibida corretamente.
 No security grupo fiz a liberação da porta 22 para ter acesso via SSH. 
 ![ec2Ace14](Imagens/3_EC2_Access/Imagem_14.png)
 
-Criei uma IAM role permitindo a instância EC2 acessar o Systems Manager.<br>
+Criei uma IAM Role permitindo a instância EC2 acessar o Systems Manager.<br>
 O AWS Systems Manager fornece um shell interativo baseado em navegador e CLI para gerenciar instâncias EC2 do Windows e do Linux, sem a necessidade de abrir portas de entrada, gerenciar chaves SSH ou usar hosts de bastiões
 ![ec2Ace15](Imagens/3_EC2_Access/Imagem_15.png)
 
