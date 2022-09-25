@@ -75,3 +75,24 @@ Chequei o status do apache e confirmei que o serviço estava desabilitado.
 
 Coloquei o serviço do apache enable e chequei novamente para ter certeza se o status tinha alterado.
 ![ec2Trou25](Imagens/4_EC2_Troubleshooting/Imagem_25.png)
+
+**5 - Balanceamento**<br>
+Snapshot da Instância.
+![Balan26](Imagens/5_Balanceamento/Imagem_26.png)
+![Balan27](Imagens/5_Balanceamento/Imagem_27.png)
+
+Com o Snapshot fiz a Image e o Launch da instância a partit da AMI. 
+![Balan28](Imagens/5_Balanceamento/Imagem_28.png)
+
+Primeira Instância.
+![Balan29](Imagens/5_Balanceamento/Imagem_29.png)
+
+Serviço web da primeira instância funcionando.
+![Balan30](Imagens/5_Balanceamento/Imagem_30.png)
+
+Cópia Idêntica da EC2
+![Balan31](Imagens/5_Balanceamento/Imagem_31.png)
+
+Serviço web da segunda instância funcionando.
+![Balan32](Imagens/5_Balanceamento/Imagem_32.png)
+
