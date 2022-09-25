@@ -110,3 +110,9 @@ Criação do Load Balancer.
 Serviço web respondendo ao endereço de DNS do Load Balancer.
 ![Balan38](Imagens/5_Balanceamento/Imagem_38.png)
 ![Balan39](Imagens/5_Balanceamento/Imagem_39.png)
+
+Pausei uma das instâncias para verificar se ainda seria possível acessar a página web.
+![Balan40](Imagens/5_Balanceamento/Imagem_40.png)
+
+Pagina web respondendo apenas a instância que não foi pausada.
+![Balan41](Imagens/5_Balanceamento/Imagem_41.png)
