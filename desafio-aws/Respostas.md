@@ -38,5 +38,9 @@ Fiz a alteração para liberar a porta 80.<br>
 A página web voltou a ser exibida corretamente.<br>
 ![netw13](Imagens/2_Networking/Imagem_13.png)
 
+**3 - EC2 Access**<br>
+No security grupo fiz a liberacao da porta 22 para ter acesso via SSH. 
+![ec2Ace14](Imagens/3_EC2_Access/Imagem_14.png)
+
 
 
