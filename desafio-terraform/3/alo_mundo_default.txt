@@ -1,0 +1,5 @@
+Alo Mundo!
+
+Meu nome é Angela de Jesus e estou participando do Desafio Terraform da Getup/LinuxTips.
+
+Hoje é dia 2022-10-05 e os números de 1 a 100 divisíveis por 15 são:[15,30,45,60,75,90]
