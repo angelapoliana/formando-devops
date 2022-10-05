@@ -1,1 +1,0 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"servers","Source":"./servers","Dir":"servers"},{"Key":"servers.metrics_server","Source":"registry.terraform.io/iplabs/metrics-server/kubernetes","Version":"1.0.0","Dir":".terraform/modules/servers.metrics_server"}]}
