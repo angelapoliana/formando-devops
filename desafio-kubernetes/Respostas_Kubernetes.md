@@ -47,7 +47,7 @@ sudo kubectl create -f pod_serverweb.yaml
 ```
 angela@angela:~$ sudo kubectl --namespace meusite logs -l app=ovo --all-containers | grep erro
 ```
-2 - Visualizando as labels taints do node meuk8s-control-plane:
+2 - Visualizando as labels taints do node ```meuk8s-control-plane```:
 ```
 angela@angela:~$ sudo kubectl describe node meuk8s-control-plane | grep -i taint
 Taints: node-role.kubernetes.io/control-plane:NoSchedule
@@ -62,7 +62,6 @@ Visualizando as labels taints do node meuk8s-worker2:
 angela@angela:~$ sudo kubectl describe node meuk8s-worker2 | grep -i taint
 Taints: <none>
 ```
-
 Criação do manifesto do recurso para ser executado em todos os nós do cluster, expecificando uma tolerancia:
 ```
 kubectl create deployment --dry-run=client -o yaml --image=nginx:latest meu-spread > nginx-deployment-template.yaml
@@ -108,7 +107,6 @@ angela@angela:~$ sudo kubectl get deployments.apps
 NAME         READY   UP-TO-DATE   AVAILABLE   AGE
 meu-spread   1/1     1            1           2m36s
 ```
-
 Escalando o deployment do nginx para 5 réplicas:
 ```
 angela@angela:~$ sudo kubectl scale deployment meu-spread --replicas=5
@@ -784,9 +782,7 @@ Events:
   Normal  SuccessfulCreate  39s   statefulset-controller  create Claim volume-data-meusiteset-2 Pod meusiteset-2 in StatefulSet meusiteset success
   Normal  SuccessfulCreate  39s   statefulset-controller  create Pod meusiteset-2 in StatefulSet meusiteset successful
 ```
-
 10 - Criação do namespace ```backend```:
-
 ```
 angela@angela:~$ sudo kubectl create namespace backend 
 namespace/backend created
@@ -940,7 +936,6 @@ deployment.apps/balaclava   2/2     2            2           42s
 NAME                                   DESIRED   CURRENT   READY   AGE
 replicaset.apps/balaclava-546c9548c6   2         2         2       42s
 ```
-
 ```
 angela@angela:~$ sudo kubectl describe service balaclava-svc
 Name:                     balaclava-svc
@@ -1717,9 +1712,9 @@ NAME      SECRETS   AGE
 default   0         92m
 userx     0         92m
 ```
-Manifesto para criação da role:
+Manifesto para criação da role e da rolebinding:
 ```
-angela@angela:~$ cat role-desafio.yaml 
+angela@angela:~$ cat rbac.yaml 
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -1727,50 +1722,48 @@ metadata:
   name: role-desafio
 rules:
 - apiGroups: [""]
-  resources: ["pods", "pods/log", "deployments"]
+  resources: ["pods", "pods/log"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-```
-```
-angela@angela:~$ sudo kubectl create -f role-desafio.yaml 
-role.rbac.authorization.k8s.io/role-desafio created
-```
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: role-desafio-bind
+  namespace: developer
+subjects:
+- kind: ServiceAccount
+  name: userx
+  namespace: developer
+roleRef:
+  kind: Role 
+  name: role-desafio
+  apiGroup: rbac.authorization.k8s.io
+```
+```
+angela@angela:~$ sudo kubectl create -f rbac.yaml 
+role.rbac.authorization.k8s.io/role-desafio created
+rolebinding.rbac.authorization.k8s.io/role-desafio-bind created
+```
 ```
 angela@angela:~$ sudo kubectl describe role -n developer
 Name:         role-desafio
 Labels:       <none>
 Annotations:  <none>
 PolicyRule:
-  Resources    Non-Resource URLs  Resource Names  Verbs
-  ---------    -----------------  --------------  -----
-  deployments  []                 []              [get list watch create update patch delete]
-  pods/log     []                 []              [get list watch create update patch delete]
-  pods         []                 []              [get list watch create update patch delete]
-```
-Manifesto para criação da rolebinding:
-```
-angela@angela:~$ cat rolebinding-desafio.yaml 
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: fullaccess-pods-deployments
-  namespace: developer
-subjects:
-- kind: ServiceAccount
-  name: userx
-  namespace: developer 
-roleRef:
-  kind: Role 
-  name: role-desafio 
-  apiGroup: rbac.authorization.k8s.io
-```
-```
-angela@angela:~$ sudo kubectl create -f rolebinding-desafio.yaml 
-rolebinding.rbac.authorization.k8s.io/fullaccess-pods-deployments created
+  Resources         Non-Resource URLs  Resource Names  Verbs
+  ---------         -----------------  --------------  -----
+  pods/log          []                 []              [get list watch create update patch delete]
+  pods              []                 []              [get list watch create update patch delete]
+  deployments.apps  []                 []              [get list watch create update patch delete]
 ```
 ```
 angela@angela:~$ sudo kubectl describe rolebinding -n developer
-Name:         fullaccess-pods-deployments
+Name:         role-desafio-bind
 Labels:       <none>
 Annotations:  <none>
 Role:
@@ -1780,7 +1773,133 @@ Subjects:
   Kind            Name   Namespace
   ----            ----   ---------
   ServiceAccount  userx  developer
-
 ```
 26 -
+```
+angela@angela:~$ openssl genrsa -out jane.key 2048
+```
+```
+angela@angela:~$ openssl req -new -key jane.key -out jane.csr 
+```
+```
+ cat jane.csr | base64 | tr -d "\n"
+ ```
+ ```
+ angela@angela:~$ sudo kubectl apply -f k8s-csr.yaml 
+[sudo] password for angela: 
+certificatesigningrequest.certificates.k8s.io/jane created
+```
+```
+angela@angela:~$ sudo kubectl get csr
+NAME   AGE   SIGNERNAME                            REQUESTOR          REQUESTEDDURATION   CONDITION
+jane   80s   kubernetes.io/kube-apiserver-client   kubernetes-admin   <none>              Pending
+```
+```
+angela@angela:~$ sudo kubectl certificate approve jane
+certificatesigningrequest.certificates.k8s.io/jane approved
+```
+```
+NAME   AGE     SIGNERNAME                            REQUESTOR          REQUESTEDDURATION   CONDITION
+jane   2m49s   kubernetes.io/kube-apiserver-client   kubernetes-admin   <none>              Approved,Issued
+```
+```
+angela@angela:~$ sudo kubectl get csr jane -o jsonpath='{.status.certificate}'| base64 -d > jane.crt
+```
+```
+angela@angela:~$ cat rbac.yaml 
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: frontend
+  name: list-pods
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["list"]
 
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: list-pods-bind
+  namespace: frontend
+subjects:
+- kind: User
+  name: jane
+  namespace: frontend 
+roleRef:
+  kind: Role 
+  name: list-pods
+  apiGroup: rbac.authorization.k8s.io
+```
+```
+angela@angela:~$ sudo kubectl apply -f rbac.yaml 
+role.rbac.authorization.k8s.io/list-pods created
+rolebinding.rbac.authorization.k8s.io/list-pods-bind created
+```
+```
+angela@angela:~$ sudo kubectl describe role
+Name:         list-pods
+Labels:       <none>
+Annotations:  <none>
+PolicyRule:
+  Resources  Non-Resource URLs  Resource Names  Verbs
+  ---------  -----------------  --------------  -----
+  pods       []                 []              [list]
+```
+```
+angela@angela:~$ sudo kubectl describe rolebinding -n frontend
+Name:         list-pods-bind
+Labels:       <none>
+Annotations:  <none>
+Role:
+  Kind:  Role
+  Name:  list-pods
+Subjects:
+  Kind  Name  Namespace
+  ----  ----  ---------
+  User  jane  frontend
+```
+```
+angela@angela:~$ kubectl config set-credentials jane --client-key=jane.key --client-certificate=jane.crt --embed-certs=true
+User "jane" set.
+```
+```
+angela@angela:~$ sudo kubectl config set-context jane --cluster=kubernetes --user=jane --namespace=frontend
+Context "jane" created.
+```
+```
+angela@angela:~$ kubectl config use-context jane  
+Switched to context "jane".
+```
+```
+angela@angela:~$ kubectl config view -o jsonpath='{.users[*].name}'
+jane
+```
+```
+angela@angela:~$ sudo kubectl delete pods nginx -n frontend --as=jane
+Error from server (Forbidden): pods "nginx" is forbidden: User "jane" cannot delete resource "pods" in API group "" in the namespace "frontend"
+```
+```
+angela@angela:~$ sudo kubectl run nginx --image=nginx -n frontend --as=jane
+Error from server (Forbidden): pods is forbidden: User "jane" cannot create resource "pods" in API group "" in the namespace "frontend"
+```
+```
+angela@angela:~$ sudo kubectl get  pods -n frontend --as=jane
+NAME    READY   STATUS    RESTARTS   AGE
+nginx   1/1     Running   0          2m4s
+```
+```
+angela@angela:~$ sudo kubectl auth can-i create pods --namespace frontend --as=jane
+no
+```
+```
+angela@angela:~$ sudo kubectl auth can-i list  pods --namespace frontend --as=jane
+yes
+```
+```
+angela@angela:~$ sudo kubectl auth can-i delete  pods --namespace frontend --as=jane
+no
+```
+27 -
