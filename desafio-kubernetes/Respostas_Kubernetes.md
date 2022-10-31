@@ -405,17 +405,16 @@ NAME                       	CHART VERSION	APP VERSION	DESCRIPTION
 ingress-nginx/ingress-nginx	4.3.0        	1.4.0      	Ingress controller for Kubernetes using NGINX a...
 ```
 ```
-angela@angela:~$ sudo helm upgrade ingress-nginx-2 ingress-nginx/ingress-nginx \
+angela@angela:~$ sudo sudo helm install ingress-nginx-2 ingress-nginx/ingress-nginx \
 --namespace ingress-nginx-2 \
 --set controller.hostPort.enabled=true \
 --set controller.service.type=NodePort \
 --set controller.updateStrategy.type=Recreate
-Release "ingress-nginx-2" has been upgraded. Happy Helming!
 NAME: ingress-nginx-2
-LAST DEPLOYED: Thu Oct 27 22:03:01 2022
+LAST DEPLOYED: Mon Oct 31 10:48:02 2022
 NAMESPACE: ingress-nginx-2
 STATUS: deployed
-REVISION: 2
+REVISION: 1
 TEST SUITE: None
 NOTES:
 The ingress-nginx controller has been installed.
@@ -463,11 +462,6 @@ If TLS is enabled for the Ingress, a Secret containing the certificate and key m
     tls.crt: <base64 encoded cert>
     tls.key: <base64 encoded key>
   type: kubernetes.io/tls
-```
-```
-angela@angela:~$  sudo kubectl --namespace ingress-nginx-2 get services -o wide -w ingress-nginx-2-controller
-NAME                         TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)                      AGE     SELECTOR
-ingress-nginx-2-controller   NodePort   10.96.50.50   <none>        80:31750/TCP,443:30838/TCP   3m48s   app.kubernetes.io/component=controller,app.kubernetes.io/instance=ingress-nginx-2,app.kubernetes.io/name=ingress-nginx
 ```
 7 -
 ```
@@ -663,9 +657,39 @@ Events:
   Normal  ScalingReplicaSet  4m44s                deployment-controller  Scaled down replica set pombo-8587cc96bb to 0 from 1
   Normal  ScalingReplicaSet  4s (x16 over 2m53s)  deployment-controller  (combined from similar events): Scaled down replica set pombo-5f4dbbfcc9 to 0 from 1
 ```
-
-##### FAZER INGRESS
-
+```
+angela@angela:~$ sudo kubectl expose deployment pombo --type=NodePort --port=80
+service/pombo exposed
+```
+```
+angela@angela:~$ sudo kubectl get service
+NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+kubernetes   ClusterIP   10.96.0.1      <none>        443/TCP        10d
+pombo        NodePort    10.96.12.176   <none>        80:31843/TCP   4s
+```
+```
+angela@angela:~$ sudo kubectl create ingress web --class=nginx --rule="local.lab/=pombo:80"
+ingress.networking.k8s.io/web created
+```
+```
+angela@angela:~$ sudo kubectl describe ingress web
+Name:             web
+Labels:           <none>
+Namespace:        default
+Address:          
+Ingress Class:    nginx
+Default backend:  <default>
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  local.lab   
+              /   pombo:80 (10.244.1.8:80,10.244.1.9:80,10.244.2.10:80 + 1 more...)
+Annotations:  <none>
+Events:
+  Type    Reason  Age   From                      Message
+  ----    ------  ----  ----                      -------
+  Normal  Sync    8s    nginx-ingress-controller  Scheduled for sync
+```
 8 -
 ```
 angela@angela:~$ sudo kubectl create deployment guardaroupa --image=redis --port=6379
@@ -684,8 +708,15 @@ kubernetes           ClusterIP      10.96.0.1       <none>        443/TCP       
 nginx                ClusterIP      10.96.205.70    <none>        80/TCP           2d8h
 nginx-loadbalancer   LoadBalancer   10.96.245.209   <pending>     80:31222/TCP     24h
 ```
-9 - Manifesto para criação do StatefulSet:
-```angela@angela:~$ cat statefulsts.yaml 
+9 - 
+```
+angela@angela:~$ sudo kubectl create namespace backend
+namespace/backend created
+```
+
+Manifesto para criação do StatefulSet:
+```
+angela@angela:~$ cat statefulsts.yaml 
 apiVersion: v1
 kind: Service
 metadata:
@@ -733,20 +764,22 @@ spec:
       name: volume-data
     spec:
       accessModes: [ "ReadWriteOnce" ]
+      storageClassName: standard
       resources:
         requests:
           storage: 1Gi
 ```
 ```
-angela@angela:~$ sudo kubectl create -f statefulsts.yaml 
+angela@angela:~$ sudo kubectl create -f statefulsts.yaml
 service/nginx created
 statefulset.apps/meusiteset created
 ```
 ```
 angela@angela:~$ sudo kubectl describe statefulset meusiteset -n backend
+[sudo] password for angela: 
 Name:               meusiteset
 Namespace:          backend
-CreationTimestamp:  Thu, 27 Oct 2022 21:16:53 +0100
+CreationTimestamp:  Mon, 31 Oct 2022 11:10:41 +0000
 Selector:           app=nginx
 Labels:             <none>
 Annotations:        <none>
@@ -767,20 +800,20 @@ Pod Template:
   Volumes:  <none>
 Volume Claims:
   Name:          volume-data
-  StorageClass:  
+  StorageClass:  standard
   Labels:        <none>
   Annotations:   <none>
   Capacity:      1Gi
   Access Modes:  [ReadWriteOnce]
 Events:
-  Type    Reason            Age   From                    Message
-  ----    ------            ----  ----                    -------
-  Normal  SuccessfulCreate  52s   statefulset-controller  create Claim volume-data-meusiteset-0 Pod meusiteset-0 in StatefulSet meusiteset success
-  Normal  SuccessfulCreate  52s   statefulset-controller  create Pod meusiteset-0 in StatefulSet meusiteset successful
-  Normal  SuccessfulCreate  45s   statefulset-controller  create Claim volume-data-meusiteset-1 Pod meusiteset-1 in StatefulSet meusiteset success
-  Normal  SuccessfulCreate  45s   statefulset-controller  create Pod meusiteset-1 in StatefulSet meusiteset successful
-  Normal  SuccessfulCreate  39s   statefulset-controller  create Claim volume-data-meusiteset-2 Pod meusiteset-2 in StatefulSet meusiteset success
-  Normal  SuccessfulCreate  39s   statefulset-controller  create Pod meusiteset-2 in StatefulSet meusiteset successful
+  Type    Reason            Age    From                    Message
+  ----    ------            ----   ----                    -------
+  Normal  SuccessfulCreate  2m46s  statefulset-controller  create Claim volume-data-meusiteset-0 Pod meusiteset-0 in StatefulSet meusiteset success
+  Normal  SuccessfulCreate  2m46s  statefulset-controller  create Pod meusiteset-0 in StatefulSet meusiteset successful
+  Normal  SuccessfulCreate  2m37s  statefulset-controller  create Claim volume-data-meusiteset-1 Pod meusiteset-1 in StatefulSet meusiteset success
+  Normal  SuccessfulCreate  2m37s  statefulset-controller  create Pod meusiteset-1 in StatefulSet meusiteset successful
+  Normal  SuccessfulCreate  2m30s  statefulset-controller  create Claim volume-data-meusiteset-2 Pod meusiteset-2 in StatefulSet meusiteset success
+  Normal  SuccessfulCreate  2m30s  statefulset-controller  create Pod meusiteset-2 in StatefulSet meusiteset successful
 ```
 10 - Criação do namespace ```backend```:
 ```
@@ -922,40 +955,9 @@ deployment.apps/balaclava created
 service/balaclava-svc created
 ```
 ```
-angela@angela:~$ sudo kubectl get all -n backend
-NAME                             READY   STATUS    RESTARTS   AGE
-pod/balaclava-546c9548c6-lbdg5   1/1     Running   0          42s
-pod/balaclava-546c9548c6-tl2pz   1/1     Running   0          42s
-
-NAME                    TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
-service/balaclava-svc   LoadBalancer   10.96.38.209   <pending>     6379:31320/TCP   42s
-
-NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/balaclava   2/2     2            2           42s
-
-NAME                                   DESIRED   CURRENT   READY   AGE
-replicaset.apps/balaclava-546c9548c6   2         2         2       42s
-```
-```
-angela@angela:~$ sudo kubectl describe service balaclava-svc
-Name:                     balaclava-svc
-Namespace:                default
-Labels:                   backend=balaclava
-                          minhachave=semvalor
-Annotations:              oci.oraclecloud.com/load-balancer-type: lb
-Selector:                 backend=balaclava,minhachave=semvalor
-Type:                     LoadBalancer
-IP Family Policy:         SingleStack
-IP Families:              IPv4
-IP:                       10.96.208.171
-IPs:                      10.96.208.171
-Port:                     <unset>  6379/TCP
-TargetPort:               6379/TCP
-NodePort:                 <unset>  32246/TCP
-Endpoints:                <none>
-Session Affinity:         None
-External Traffic Policy:  Cluster
-Events:                   <none>
+angela@angela:~$ sudo kubectl get services -A --output=custom-columns='NAME:.metadata.name,TYPE:.spec.type,SELECTOR:.spec.selector' | egrep "LoadBalancer|NAME" 
+NAME                                   TYPE           SELECTOR
+balaclava-svc                          LoadBalancer   map[backend:balaclava minhachave:semvalor]
 ```
 12 - Criação do namespace ```segredosdesucesso```:
 ```
@@ -1903,3 +1905,11 @@ angela@angela:~$ sudo kubectl auth can-i delete  pods --namespace frontend --as=
 no
 ```
 27 -
+```
+angela@angela:~$ sudo kubectl --namespace kube-system get componentstatuses
+Warning: v1 ComponentStatus is deprecated in v1.19+
+NAME                 STATUS    MESSAGE                         ERROR
+controller-manager   Healthy   ok                              
+scheduler            Healthy   ok                              
+etcd-0               Healthy   {"health":"true","reason":""}   
+```
