@@ -1029,6 +1029,25 @@ NAME               DATA   AGE
 configsite         1      67s
 kube-root-ca.crt   1      67s
 ```
+```
+angela@angela:~$ sudo kubectl describe configmap configsite -n site
+Name:         configsite
+Namespace:    site
+Labels:       <none>
+Annotations:  <none>
+
+Data
+====
+index.html:
+----
+Angela de Jesus
+
+
+BinaryData
+====
+
+Events:  <none>
+```
 14 - Manifesto e criação do recurso ```meudeploy```:
 ```
 angela@angela:~$ cat nginx-deployment-template.yaml 
